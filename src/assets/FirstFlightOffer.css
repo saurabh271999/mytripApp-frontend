@@ -1,0 +1,199 @@
+/* .offer-wrapper {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+  }
+  
+  .hero-section {
+    text-align: center;
+    background-color: #fff;
+  }
+  
+  .hero-image {
+    width: 100%;
+    max-width: 1024px;
+    height: auto;
+  }
+  
+  .content-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+  
+  .subtitle {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  .coupon-box {
+    background-color: #fdf3d1;
+    border: 2px dashed #ff9800;
+    padding: 10px 15px;
+    margin: 20px 0;
+    font-size: 18px;
+    display: inline-block;
+   
+  }
+  
+  .highlight-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 30px 0;
+  }
+  
+  .highlight-card {
+    flex: 1;
+    min-width: 280px;
+    background-color: #e3f2fd;
+    padding: 20px;
+    border-left: 4px solid #0288d1;
+    border-radius: 8px;
+  }
+  
+  .highlight-card h3 {
+    margin-bottom: 10px;
+    color: #0277bd;
+  }
+  
+  .terms-section {
+    background-color: #fff3e0;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .terms-section h3 {
+    color: #e65100;
+  }
+  
+  .terms-section ul {
+    padding-left: 20px;
+  }
+  .book-btn2{
+    
+        margin-top: 15px;
+        padding: 12px 24px;
+        background-color: #FF4F17 !important;
+        color: black;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      
+      .book-btn2:hover {
+        height: 45px;
+      }
+      .offer-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+      }
+      
+      .hero-section {
+        text-align: center;
+      }
+      
+      .content-container {
+        max-width: 600px;
+        width: 100%;
+      }
+      
+   */
+   .offer-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .hero-section {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-image {
+    width: 200px;
+    height: auto;
+  }
+  
+  .content-container {
+    text-align: center;
+  }
+  
+  .main-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 1rem;
+  }
+  
+  .coupon-box {
+    background-color: #ffe9b2;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    display: inline-block;
+  }
+  
+  .book-btn {
+    background-color: #ff6b00;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  .book-btn:hover {
+    background-color: #e55c00;
+  }
+  
+  .highlight-boxes {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+    text-align: left;
+  }
+  
+  .highlight-card {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 1rem;
+  }
+  
+  .terms-section {
+    margin-top: 2rem;
+    text-align: left;
+  }
+  
+  .terms-section ul {
+    padding-left: 1.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .highlight-boxes {
+      flex-direction: row;
+    }
+  
+    .highlight-card {
+      width: 48%;
+    }
+  }
+  

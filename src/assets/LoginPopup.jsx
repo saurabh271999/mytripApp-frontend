@@ -28,7 +28,7 @@ const LoginPopup = ({ onLoginSuccess }) => {
       return;
     }
     try {
-      const res = await fetch('http://localhost:4000/api/otp/send-otp', {
+      const res = await fetch('https://mytripapp-backend-2.onrender.com/api/otp/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: signupEmail })
@@ -53,7 +53,7 @@ const LoginPopup = ({ onLoginSuccess }) => {
     }
     setSigningUp(true);
     try {
-      const res = await fetch('http://localhost:4000/api/auth/verify-signup', {
+      const res = await fetch('https://mytripapp-backend-2.onrender.com/api/auth/verify-signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -84,7 +84,7 @@ const LoginPopup = ({ onLoginSuccess }) => {
       return;
     }
     try {
-      const res = await fetch('http://localhost:4000/api/otp/send-otp', {
+      const res = await fetch('https://mytripapp-backend-2.onrender.com/api/otp/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: loginEmail })
@@ -109,7 +109,7 @@ const LoginPopup = ({ onLoginSuccess }) => {
     }
     setLoggingIn(true);
     try {
-      const res = await fetch('http://localhost:4000/api/auth/verify-login', {
+      const res = await fetch('https://mytripapp-backend-2.onrender.com/api/auth/verify-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: loginEmail, otp: loginOtp })
@@ -118,7 +118,7 @@ const LoginPopup = ({ onLoginSuccess }) => {
       if (res.ok) {
         // Fetch and save full user profile before closing popup
         try {
-          const profileRes = await fetch(`http://localhost:4000/api/userprofile?email=${encodeURIComponent(loginEmail)}`);
+          const profileRes = await fetch(`https://mytripapp-backend-2.onrender.com/api/userprofile?email=${encodeURIComponent(loginEmail)}`);
           const profileData = await profileRes.json();
           localStorage.setItem("userProfile", JSON.stringify(profileData));
         } catch (profileErr) {
