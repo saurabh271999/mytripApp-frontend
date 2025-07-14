@@ -29,24 +29,22 @@ const Navbar = () => {
     <>
       <nav className="flex items-center justify-between px-4 py-4 bg-white shadow-sm relative">
         {/* Left: Logo and subtitle */}
-        <div className="flex items-center space-x-2">
+        <div className="flex flex-wrap gap-5 items-center space-x-2">
           <NavLink to="/">
             <div className="flex items-center">
-              <span className="text-orange-500 text-3xl mr-2">✔️</span>
+             
               <span className="text-orange-500 font-bold text-2xl">Amazingtrip</span>
             </div>
           </NavLink>
-          <span className="hidden sm:inline text-sm text-gray-400 italic ml-2">
-            |  <span className="font-semibold"></span>
-          </span>
+           {isLoggedIn && userEmail && (
+          <div className="text-sm text-gray-600 font-semibold mr-4">
+           <h1>Welcome</h1> {userEmail}
+          </div>
+        )}
         </div>
 
         {/* Show logged in email */}
-        {isLoggedIn && userEmail && (
-          <span className="text-sm text-gray-600 font-semibold mr-4">
-            {userEmail}
-          </span>
-        )}
+       
 
         {/* Right: Nav links */}
         <div className="hidden sm:flex items-center space-x-8">
