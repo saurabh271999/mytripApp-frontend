@@ -3,9 +3,8 @@ import React, { useState } from "react";
 
 const LoginPopup = ({ onLoginSuccess }) => {
   const [showPopup, setShowPopup] = useState(true);
-
-  // Common states
   const [showSignup, setShowSignup] = useState(false);
+  const [useOtpLogin, setUseOtpLogin] = useState(true);
 
   // Signup states
   const [signupName, setSignupName] = useState("");
@@ -17,16 +16,13 @@ const LoginPopup = ({ onLoginSuccess }) => {
 
   // Login states
   const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
   const [loginOtp, setLoginOtp] = useState("");
   const [loginOtpSent, setLoginOtpSent] = useState(false);
   const [loggingIn, setLoggingIn] = useState(false);
 
-  // Send OTP for Signup
   const handleSendSignupOtp = async () => {
-    if (!signupEmail) {
-      alert("Please enter your email.");
-      return;
-    }
+    if (!signupEmail) return alert("Please enter your email.");
     try {
       const res = await fetch('https://mytripapp-backend-2.onrender.com/api/otp/send-otp', {
         method: 'POST',
@@ -45,12 +41,9 @@ const LoginPopup = ({ onLoginSuccess }) => {
     }
   };
 
-  // Signup with OTP
   const handleSignup = async () => {
-    if (!signupName || !signupEmail || !signupPassword || !signupOtp) {
-      alert("All fields are required.");
-      return;
-    }
+    if (!signupName || !signupEmail || !signupPassword || !signupOtp)
+      return alert("All fields are required.");
     setSigningUp(true);
     try {
       const res = await fetch('https://mytripapp-backend-2.onrender.com/api/auth/verify-signup', {
@@ -77,12 +70,8 @@ const LoginPopup = ({ onLoginSuccess }) => {
     setSigningUp(false);
   };
 
-  // Send OTP for Login
   const handleSendLoginOtp = async () => {
-    if (!loginEmail) {
-      alert("Please enter your email.");
-      return;
-    }
+    if (!loginEmail) return alert("Please enter your email.");
     try {
       const res = await fetch('https://mytripapp-backend-2.onrender.com/api/otp/send-otp', {
         method: 'POST',
@@ -101,29 +90,28 @@ const LoginPopup = ({ onLoginSuccess }) => {
     }
   };
 
-  // Login with OTP
   const handleLogin = async () => {
-    if (!loginEmail || !loginOtp) {
-      alert("Please enter both email and OTP.");
-      return;
-    }
+    if (!loginEmail) return alert("Please enter your email.");
+    if (useOtpLogin && !loginOtp) return alert("Please enter OTP.");
+    if (!useOtpLogin && !loginPassword) return alert("Please enter your password.");
+
     setLoggingIn(true);
     try {
-      const res = await fetch('https://mytripapp-backend-2.onrender.com/api/auth/verify-login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: loginEmail, otp: loginOtp })
+      const endpoint = useOtpLogin ? "verify-login" : "login-by-password";
+      const payload = useOtpLogin ? { email: loginEmail, otp: loginOtp } : { email: loginEmail, password: loginPassword };
+
+      const res = await fetch(`https://mytripapp-backend-2.onrender.com/api/auth/${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
+
       const data = await res.json();
+
       if (res.ok) {
-        // Fetch and save full user profile before closing popup
-        try {
-          const profileRes = await fetch(`https://mytripapp-backend-2.onrender.com/api/userprofile?email=${encodeURIComponent(loginEmail)}`);
-          const profileData = await profileRes.json();
-          localStorage.setItem("userProfile", JSON.stringify(profileData));
-        } catch (profileErr) {
-          alert("Login successful, but failed to load profile data.");
-        }
+        const profileRes = await fetch(`https://mytripapp-backend-2.onrender.com/api/userprofile?email=${encodeURIComponent(loginEmail)}`);
+        const profileData = await profileRes.json();
+        localStorage.setItem("userProfile", JSON.stringify(profileData));
         alert("Login successful!");
         setShowPopup(false);
         if (onLoginSuccess) onLoginSuccess();
@@ -141,10 +129,7 @@ const LoginPopup = ({ onLoginSuccess }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white rounded-lg w-full max-w-md shadow-lg p-6 relative">
-        <button
-          className="absolute top-2 right-2 text-gray-500 hover:text-black text-xl"
-          onClick={() => setShowPopup(false)}
-        >
+        <button className="absolute top-2 right-2 text-gray-500 hover:text-black text-xl" onClick={() => setShowPopup(false)}>
           &times;
         </button>
         <h3 className="text-xl font-semibold mb-4">{showSignup ? "Sign Up" : "Login"}</h3>
@@ -157,23 +142,50 @@ const LoginPopup = ({ onLoginSuccess }) => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none mb-2"
               value={loginEmail}
               onChange={e => setLoginEmail(e.target.value)}
-              disabled={loginOtpSent}
+              disabled={loginOtpSent && useOtpLogin}
             />
-            {!loginOtpSent ? (
-              <button
-                onClick={handleSendLoginOtp}
-                className="bg-black text-white w-full py-2 rounded-md mt-2 hover:bg-gray-900 transition"
-              >
-                Send OTP
-              </button>
+
+            <button
+              className="text-sm text-blue-500 underline mb-2"
+              onClick={() => setUseOtpLogin(prev => !prev)}
+            >
+              {useOtpLogin ? "Login with Password instead" : "Login with OTP instead"}
+            </button>
+
+            {useOtpLogin ? (
+              !loginOtpSent ? (
+                <button
+                  onClick={handleSendLoginOtp}
+                  className="bg-black text-white w-full py-2 rounded-md mt-2 hover:bg-gray-900 transition"
+                >
+                  Send OTP
+                </button>
+              ) : (
+                <>
+                  <input
+                    type="text"
+                    placeholder="Enter OTP"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none mb-2"
+                    value={loginOtp}
+                    onChange={e => setLoginOtp(e.target.value)}
+                  />
+                  <button
+                    onClick={handleLogin}
+                    className="bg-black text-white w-full py-2 rounded-md mt-2 hover:bg-gray-900 transition"
+                    disabled={loggingIn}
+                  >
+                    {loggingIn ? "Logging in..." : "Login"}
+                  </button>
+                </>
+              )
             ) : (
               <>
                 <input
-                  type="text"
-                  placeholder="Enter OTP"
+                  type="password"
+                  placeholder="Password"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none mb-2"
-                  value={loginOtp}
-                  onChange={e => setLoginOtp(e.target.value)}
+                  value={loginPassword}
+                  onChange={e => setLoginPassword(e.target.value)}
                 />
                 <button
                   onClick={handleLogin}
@@ -184,6 +196,7 @@ const LoginPopup = ({ onLoginSuccess }) => {
                 </button>
               </>
             )}
+
             <button
               className="w-full mt-4 text-blue-600 underline"
               onClick={() => setShowSignup(true)}
