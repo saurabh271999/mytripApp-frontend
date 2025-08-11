@@ -24,7 +24,7 @@ const LoginPopup = ({ onLoginSuccess }) => {
   const handleSendSignupOtp = async () => {
     if (!signupEmail) return alert("Please enter your email.");
     try {
-      const res = await fetch('https://mytripapp-backend-2.onrender.com/api/otp/send-otp', {
+      const res = await fetch('https://mytrip-backend.vercel.app/api/otp/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: signupEmail })
@@ -46,7 +46,7 @@ const LoginPopup = ({ onLoginSuccess }) => {
       return alert("All fields are required.");
     setSigningUp(true);
     try {
-      const res = await fetch('https://mytripapp-backend-2.onrender.com/api/auth/verify-signup', {
+      const res = await fetch('https://mytrip-backend.vercel.app/api/auth/verify-signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -73,7 +73,7 @@ const LoginPopup = ({ onLoginSuccess }) => {
   const handleSendLoginOtp = async () => {
     if (!loginEmail) return alert("Please enter your email.");
     try {
-      const res = await fetch('https://mytripapp-backend-2.onrender.com/api/otp/send-otp', {
+      const res = await fetch('https://mytrip-backend.vercel.app/api/otp/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: loginEmail })
@@ -100,7 +100,7 @@ const LoginPopup = ({ onLoginSuccess }) => {
       const endpoint = useOtpLogin ? "verify-login" : "login-by-password";
       const payload = useOtpLogin ? { email: loginEmail, otp: loginOtp } : { email: loginEmail, password: loginPassword };
 
-      const res = await fetch(`https://mytripapp-backend-2.onrender.com/api/auth/${endpoint}`, {
+      const res = await fetch(`https://mytrip-backend.vercel.app/api/auth/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -109,7 +109,7 @@ const LoginPopup = ({ onLoginSuccess }) => {
       const data = await res.json();
 
       if (res.ok) {
-        const profileRes = await fetch(`https://mytripapp-backend-2.onrender.com/api/userprofile?email=${encodeURIComponent(loginEmail)}`);
+        const profileRes = await fetch(`https://mytrip-backend.vercel.app/api/userprofile?email=${encodeURIComponent(loginEmail)}`);
         const profileData = await profileRes.json();
         localStorage.setItem("userProfile", JSON.stringify(profileData));
         alert("Login successful!");

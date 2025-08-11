@@ -17,7 +17,7 @@ const Profile = () => {
 
     const fetchProfile = async () => {
       try {
-        const res = await fetch(`https://mytripapp-backend-2.onrender.com/api/userprofile?email=${encodeURIComponent(userProfile.email)}`);
+        const res = await fetch(`https://mytrip-backend.vercel.app/api/userprofile?email=${encodeURIComponent(userProfile.email)}`);
         const data = await res.json();
         setUser({ ...data, latestBooking });
       } catch (err) {
