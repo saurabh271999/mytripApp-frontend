@@ -36,9 +36,10 @@ const LoginPopup = ({ onLoginSuccess }) => {
       } else {
         alert(data.message || "Failed to send OTP");
       }
-    } catch {
-      alert("Error sending OTP");
-    }
+    } catch (error) {
+  console.error("Failed to send OTP:", error); // Log the actual error
+  alert("An unexpected error occurred while sending the OTP.");
+}
   };
 
   const handleSignup = async () => {
@@ -80,9 +81,11 @@ const LoginPopup = ({ onLoginSuccess }) => {
       });
       const data = await res.json();
       if (res.ok) {
+        console.log(res)
         setLoginOtpSent(true);
         alert("OTP sent to your email.");
       } else {
+        console.log("error",err)
         alert(data.message || "Failed to send OTP");
       }
     } catch {
